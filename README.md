@@ -2,50 +2,45 @@
 
 ## Objective
 
-The objective of this project is to develop an ensemble of Convolutional Neural Networks (CNNs) for classifying images from the Fashion-MNIST dataset and compare its performance with a single CNN model.
+The objective of this project is to develop an ensemble of Convolutional Neural Networks (CNNs) to classify images from the Fashion-MNIST dataset and compare the performance of the ensemble with a single CNN model.
+
+The ensemble consists of five CNN models trained using bootstrap sampling. The prediction probabilities from all five models are averaged to produce the final ensemble prediction.
+
+---
 
 ## Dataset
 
-The Fashion-MNIST dataset is provided through Keras and contains grayscale images of clothing items.
+The Fashion-MNIST dataset is a collection of grayscale images of clothing and fashion items.
 
-- Image size: 28 × 28 pixels
-- Number of classes: 10
+The dataset contains 10 different classes:
+
+| Label | Class |
+|---:|---|
+| 0 | T-shirt/top |
+| 1 | Trouser |
+| 2 | Pullover |
+| 3 | Dress |
+| 4 | Coat |
+| 5 | Sandal |
+| 6 | Shirt |
+| 7 | Sneaker |
+| 8 | Bag |
+| 9 | Ankle boot |
+
+### Dataset Information
+
+- Image size: `28 × 28` pixels
 - Image type: Grayscale
+- Number of classes: 10
+- Pixel value range: 0–255
 
-For this experiment, only the first 50 training records and first 50 test records were used.
+For this experiment, only the first **50 training records** and first **50 test records** were used as specified in the task.
 
-## Data Preprocessing
+---
 
-The following preprocessing steps were performed:
+## Data Loading
 
-1. Loaded the Fashion-MNIST dataset using `keras.datasets.fashion_mnist.load_data()`.
-2. Selected the first 50 training and test records.
-3. Normalized pixel values from 0–255 to the range 0–1.
-4. Reshaped the images from `(28, 28)` to `(28, 28, 1)`.
-5. Split the training data into training and validation sets using `train_test_split`.
+The Fashion-MNIST dataset was loaded using Keras:
 
-The training data was divided into:
-
-- 40 training samples
-- 10 validation samples
-
-## CNN Architecture
-
-Each CNN model uses the following architecture:
-
-```text
-Input Image (28 × 28 × 1)
-        ↓
-Conv2D
-32 Filters
-3 × 3 Kernel
-ReLU Activation
-        ↓
-MaxPooling2D
-2 × 2 Pool
-        ↓
-Flatten
-        ↓
-Dense
-10 Neurons
-Softmax Activation
+```python
+(x_train, y_train), (x_test, y_test) = keras.datasets.fashion_mnist.load_data()
